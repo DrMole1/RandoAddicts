@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>RandoAddict-Reservation</title>
+	<meta charset="utf-8">
+	<link rel="stylesheet" type="text/css" href=https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css>
+	<link rel="stylesheet" type="text/css" href="RandoAddictStyle.css"/>
+	<script src=https://code.jquery.com/jquery-3.3.1.slim.min.js></script>
+	<script src=https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js></script>
+	<script src=https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js></script>
+</head>
+<body>
+
+	<!-- HEADBAND : NAVIGATION-->
+	<!-- Utilisation d'un bandeau pour que l'utilisateur puisse se diriger rapidement là où il souhaite sur le site -->
+	<div class="container-fluid" id="headband">
+		<div class="row border border-dark">
+			<div class="col-2 bg-success p-5">
+				<p id="title_RandoAddict"> RandoAddict</p>
+			</div>
+			<div class="col bg-success p-4">
+				<img src="img/LogoRA.png" loading="lazy" alt="logoRA">
+			</div>
+			<div class="col-8">
+				<div class="row justify-content-around bg-success p-5">
+					<div class="col">
+						<a href="boutique.html" class="btn btn-dark btn-lg btn-block" >BOUTIQUE</a> <!-- Lien vers la page "Boutique.html" -->
+					</div>
+					<div class="col">
+						<a href="formations.html" class="btn btn-dark btn-lg btn-block" >FORMATIONS</a> <!-- Lien vers la page "Formations.html" -->
+					</div>
+					<div class="col">
+						<a href="avis.html" class="btn btn-dark btn-lg btn-block" >AVIS</a> <!-- Lien vers la page "Avis.html" -->
+					</div>
+					<div class="col">
+						<a href="rando_addict.html" class="btn btn-dark btn-lg btn-block" >RANDO ADDICT</a> <!-- Lien vers la page "Rando_Addict.html" -->
+					</div>
+				</div>
+				<div class="row justify-content-around bg-secondary p-3 border border-dark">
+					<div class="col">
+						<a href="#nos_excursions" class="link-light text-white">Nos Excursions</a> <!-- Ancre vers "Nos Excursions"-->
+					</div>
+					<div class="col">
+						<a href="#nos_coupsdecoeur" class="link-light text-white">Nos Coups de Coeur</a> <!-- Ancre vers "Nos Coups de Coeur"-->
+					</div>
+					<div class="col">
+						<a href="#nos_guides" class="link-light text-white">Nos Guides</a> <!-- Ancre vers "Nos Guides"-->
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<br/>
+
+
+  <div class="align">  
+
+    <form method="post" action="DbOperations.php"> <!-- Formulaire en méthode POST-->
+      <input type = "hidden" id = "METHOD" name = "METHOD" value = "create" /> <!-- Pour s'assurer d'appliquer la bonne méthode, obligatoire à remplir-->
+
+      <label for="Nouveau client" class="font-weight-bold">Réservation</label> </br>
+
+      <!-- ADMIN VERSION ONLY -->
+      <label for="NCLI">ID</label>
+      <input type="text" name="NCLI" id="NCLI"> <p class="font-italic">Admin version only</p>
+
+      <label for="ID_Program">ID_Program</label>
+      <input type="text" name="ID_Program" id="ID_Program"> <p class="font-italic">Admin version only</p>
+
+      <label for="NOM">NOM</label>
+      <input type="text" name="NOM" id="NOM"> </br>
+
+      <label for="PRENOM">PRENOM</label>
+      <input type="text" name="PRENOM" id="PRENOM"> </br>
+
+      <label for="AGE">AGE</label>
+      <input type="text" name="AGE" id="AGE"> </br>
+
+      <label for="NUMERO">NUMERO</label>
+      <input type="text" name="NUMERO" id="NUMERO"> </br>
+
+      <button class="btn btn-lg bg-success mt-2">Enregistrer</button>
+    </form>
+  </div>
+
+  <br/> <br/>
+	<a href="index.html" class="btn btn-dark btn-lg btn-block" >RETOUR</a> <!-- Lien vers la page "Index.html" -->
+  <br/> <br/>
+
+	<!-- CARD FOOTER : FOOTER-->
+	<!-- Informations générales -->
+	<div class="card-fluid">
+  		<div class="card-header bg-secondary text-white">
+    		Nous contacter : 06 29 27 60 20
+  		</div>
+  		<div class="card-body bg-dark text-white">
+    		<h5 class="card-title">Suivez-nous sur Twitter, Facebook, Instagram, LinkedIn. </h5>
+    		<a href="rando_addict.html" class="btn btn-success">Plus d'infos</a> <!-- Lien vers la page "RandoAddict.html" -->
+    		<p class="card-text">CONDITIONS DE VENTE ET ASSURANCES , MENTIONS LÉGALES ET CGU & CONFIDENTIALITÉ ET COOKIES © TOUS DROITS RÉSERVÉS RANDO ADDICT</p>
+  		</div>
+	</div>
+
+</body>
+</html>

@@ -1,0 +1,76 @@
+@font-face 
+{ 
+	font-family: Galgony; 
+	src: url('Galgony.ttf'); 
+}  
+
+body
+{
+	font-family: Galgony;
+	font-size : 1.05em;
+	/*background-color : #F3F3F3;*/
+	background-image: url("img/BgSite.png");
+	background-repeat: repeat;
+}
+
+#headband
+{
+	color : white;
+}
+
+#title_RandoAddict
+{
+	font-size : 2.3em;
+}
+
+h1, h3, .align
+{
+	text-align: center;
+}
+
+.difficulty
+{
+	font-size: 1.5em;
+	font-weight: bold;
+}
+
+.location
+{
+	font-weight: bold;
+}
+
+.price
+{
+	font-size: 1.3em;
+	font-weight: bold;
+}
+
+.carousel_caption
+{
+	position: relative;
+	right: 25%;
+	left: 25%;
+	padding-top: 5px;
+	padding-bottom: 20px;
+	text-align: center;
+}
+
+.center
+{
+	position: relative;
+	right: 10%;
+	left: 10%;
+	padding-top: 5px;
+	padding-bottom: 20px;
+	text-align: center;
+}
+
+.photo_caption
+{
+	position: relative;
+	right: 20%;
+	left: 20%;
+	padding-top: 5px;
+	padding-bottom: 20px;
+	text-align: center;
+}
