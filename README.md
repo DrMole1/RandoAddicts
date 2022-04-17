@@ -1,5 +1,12 @@
 # RandoAddicts
 
-L'ID du client et l'ID du programme est à ajouter manuellement, pour l'instant, sur reservation.html. L'implémentation automatique de ces deux valeurs est en cours de développement.
-Saisir un ID client supérieur à 10.
-Saisir un ID programme entre 1 et 8.
+Ajouts de la V2 :
+- Site entièrement dynamique
+- Création du MCD / MLD
+- Refonte de la BDD (DDL et DML)
+- Mise en place des sessions utilisateurs
+- Un utilisateur peut créer son compte et se connecter
+- L'utilisateur connecté peut réserver son programme
+- L'utilisateur peut se déconnecter à tout moment
+- Les guides peuvent créer leur programme
+- Les nouveaux programmes et nouvelles excursions sont affichées dynamiquement sur le site
