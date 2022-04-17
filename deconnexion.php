@@ -1,7 +1,23 @@
+<?php
+
+session_start(); // Récupération de la session
+session_unset(); // Unset des variables de la super-variables $_SESSION
+session_destroy(); // Suppression de la session courante
+
+
+
+
+
+
+?>
+
+
+
+
 <!DOCTYPE html>
 <html>
 <head>
-	<title>RandoAddict-Formations</title>
+	<title>RandoAddict-Deconnexion</title>
 	<meta charset="utf-8">
 	<link rel="stylesheet" type="text/css" href=https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css>
 	<link rel="stylesheet" type="text/css" href="RandoAddictStyle.css"/>
@@ -42,35 +58,14 @@
   <br/>
 
 
-  <!-- MODAL : INFORMATION-->
-  <div class="modal" tabindex="-1" role="dialog" id="myModal">
-      <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-              <h5 class="modal-title">Veuillez-nous excuser</h5>
-              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                  <span aria-hidden="true">&times;</span>
-              </button>
-            </div>
-            <div class="modal-body">
-              <p>Cette page n'est pas encore finie dans son entièreté.</p>
-            </div>
-            <div class="modal-footer">
-              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-              <button type="button" class="btn btn-primary">Save changes</button>
-            </div>
-        </div>
-      </div>
-  </div>
-
-  <h1>Nos Formations</h1> <br/>
+  <h1>Déconnexion</h1> <br/>
 
 
   <!-- JUMBOTRON : PRESENTATION-->
   <div class="container">
     <div class="jumbotron">
-        <h2 class="display-4">Formations</h2>
-        <p class="lead">Cette page n'est pas encore disponible.</p>
+        <h2 class="display-4">Au revoir !</h2>
+        <p class="lead">Vous avez été déconnecté.</p>
         <hr class="my-4">
         <p>Retour à la page principale :</p>
         <p class="lead">
@@ -79,13 +74,6 @@
     </div>
   </div>
   <br/>
-
-
-<script type="text/javascript">
-  $(window).on('load', function() {
-    $('#myModal').modal('show');
-  });
-</script>
 
 
 	<!-- CARD FOOTER : FOOTER-->

@@ -1,7 +1,32 @@
+<?php
+
+session_start(); // Récupération de la session
+
+// Déclaration d'une variable tampon
+$id_utilisateur = -1;
+
+// Ouverture d'une connexion à la BDD. Nom de la BDD : rando_addicts
+$PDO = new PDO('mysql:host=localhost;dbname=rando_addicts', 'root', '');
+
+if(isset($_SESSION['id']))
+{
+  $id_utilisateur = $_SESSION['id'];
+
+}
+
+
+
+
+
+?>
+
+
+
+
 <!DOCTYPE html>
 <html>
 <head>
-	<title>RandoAddict-Formations</title>
+	<title>RandoAddict-CreerProgramme</title>
 	<meta charset="utf-8">
 	<link rel="stylesheet" type="text/css" href=https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css>
 	<link rel="stylesheet" type="text/css" href="RandoAddictStyle.css"/>
@@ -33,7 +58,16 @@
             <a href="avis.html" class="btn btn-dark btn-lg btn-block" >AVIS</a> <!-- Lien vers la page "Avis.html" -->
           </div>
           <div class="col">
-            <a href="rando_addict.html" class="btn btn-dark btn-lg btn-block" >RANDO ADDICT</a> <!-- Lien vers la page "Rando_Addict.html" -->
+            <?php
+              if($id_utilisateur != -1)         // Si l'utilisateur est connecté, il peut se déconnecter
+              {
+                echo "<a href='deconnexion.php' class='btn btn-info btn-lg btn-block' >DECONNEXION</a>";
+              }
+              else                              // Si l'utilisateur est déconnecté, il peut se connecter
+              {
+                echo "<a href='connexion.php' class='btn btn-info btn-lg btn-block' >SE CONNECTER</a>";
+              }
+            ?>
           </div>
         </div>
       </div>
@@ -42,35 +76,46 @@
   <br/>
 
 
-  <!-- MODAL : INFORMATION-->
-  <div class="modal" tabindex="-1" role="dialog" id="myModal">
-      <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-              <h5 class="modal-title">Veuillez-nous excuser</h5>
-              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                  <span aria-hidden="true">&times;</span>
-              </button>
-            </div>
-            <div class="modal-body">
-              <p>Cette page n'est pas encore finie dans son entièreté.</p>
-            </div>
-            <div class="modal-footer">
-              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-              <button type="button" class="btn btn-primary">Save changes</button>
-            </div>
-        </div>
-      </div>
-  </div>
-
-  <h1>Nos Formations</h1> <br/>
-
+  <h1>Créer un Programme</h1> <br/>
 
   <!-- JUMBOTRON : PRESENTATION-->
   <div class="container">
     <div class="jumbotron">
-        <h2 class="display-4">Formations</h2>
-        <p class="lead">Cette page n'est pas encore disponible.</p>
+        <h2 class="display-4">Options de Guide</h2>
+        <p class="lead">Renseignez les propriétés de votre programme :</p>
+
+        <form action="insertion_programme.php" method="post">
+
+          <label for="excursion">Choisir une excursion :</label>
+          <select name="excursion" id="excursion">
+            <?php
+              // Requête pour récupérer tous les id et noms des excursions disponibles et les mettre en options du select
+              $pdoStat = $PDO->prepare("SELECT Id_Excursion, Nom FROM excursion;");
+              $executeIsOk = $pdoStat->execute();
+              $excursions = $pdoStat->fetchAll();
+              foreach ($excursions as $excursion => $val) {
+                echo "<option value='" . $val['Id_Excursion'] . "'>" . $val['Id_Excursion'] . " - " . $val['Nom'] . "</option>";
+              }
+            ?>
+          </select>
+          <br/>
+
+          <?php
+            $date_now = new DateTime();
+            $date_now = $date_now->format('Y-m-d');
+          ?>
+
+          <label for="date_debut">Date de Début :</label>
+          <?php echo "<input type='date' id='date_debut' name='date_debut' value='" . $date_now . "' min='" . $date_now . "' max='2024-12-31'>"; ?>
+
+          <br/>
+
+          <label for="date_fin">Date de Fin :</label>
+          <?php echo "<input type='date' id='date_fin' name='date_fin' value='" . $date_now . "' min='" . $date_now . "' max='2024-12-31'>"; ?>
+
+          <p><input class="btn btn-success btn-lg" type="submit" name="submit" value="Enregistrer"></p>
+        </form>
+
         <hr class="my-4">
         <p>Retour à la page principale :</p>
         <p class="lead">
@@ -79,13 +124,6 @@
     </div>
   </div>
   <br/>
-
-
-<script type="text/javascript">
-  $(window).on('load', function() {
-    $('#myModal').modal('show');
-  });
-</script>
 
 
 	<!-- CARD FOOTER : FOOTER-->

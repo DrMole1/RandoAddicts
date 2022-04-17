@@ -1,7 +1,55 @@
+<?php 
+
+
+// On débute la session avec l'id du compte
+session_start();
+$id_utilisateur = $_SESSION['id'];
+
+// Ouverture d'une connexion à la BDD
+$PDO = new PDO('mysql:host=localhost;dbname=rando_addicts', 'root', '');
+// Déclaration de la variable $message
+$message = '';
+
+// Récupération des informations
+if(isset($_POST['submit']))
+{
+	$excursion = $_POST['excursion'];
+	$date_debut = $_POST['date_debut'];
+	$date_fin = $_POST['date_fin'];
+
+
+  	// Préparation de la requête d'insertion (SQL)
+	$pdoStat = $PDO->prepare("INSERT INTO programme VALUES (NULL, ' ', :date_debut, :date_fin, :id_excursion, :id_guide)");
+
+	// Lier chaque marqueur à une valeur
+	$pdoStat->bindValue(':date_debut', $date_debut);
+	$pdoStat->bindValue(':date_fin', $date_fin);
+	$pdoStat->bindValue(':id_excursion', $excursion, PDO::PARAM_INT);
+	$pdoStat->bindValue(':id_guide', $id_utilisateur, PDO::PARAM_INT);
+
+	// Exécution de la requête préparée
+	$insertIsOk = $pdoStat->execute();
+
+	// Vérification de l'exécution de la requête
+	if($insertIsOk)
+	{
+		$message = "Votre programme a été créé !";
+	}
+	else
+	{
+		$message = "Une erreur est survenue durant la création de votre programme.";
+	}
+}
+
+
+
+?>
+
+
 <!DOCTYPE html>
 <html>
 <head>
-	<title>RandoAddict-Formations</title>
+	<title>RandoAddict-InsertionProgramme</title>
 	<meta charset="utf-8">
 	<link rel="stylesheet" type="text/css" href=https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css>
 	<link rel="stylesheet" type="text/css" href="RandoAddictStyle.css"/>
@@ -33,7 +81,16 @@
             <a href="avis.html" class="btn btn-dark btn-lg btn-block" >AVIS</a> <!-- Lien vers la page "Avis.html" -->
           </div>
           <div class="col">
-            <a href="rando_addict.html" class="btn btn-dark btn-lg btn-block" >RANDO ADDICT</a> <!-- Lien vers la page "Rando_Addict.html" -->
+            <?php
+				if($id_utilisateur != -1)         // Si l'utilisateur est connecté, il peut se déconnecter
+				{
+					echo "<a href='deconnexion.php' class='btn btn-info btn-lg btn-block' >DECONNEXION</a>";
+				}
+				else                              // Si l'utilisateur est déconnecté, il peut se connecter
+				{
+					echo "<a href='connexion.php' class='btn btn-info btn-lg btn-block' >SE CONNECTER</a>";
+				}
+			?>
           </div>
         </div>
       </div>
@@ -42,50 +99,22 @@
   <br/>
 
 
-  <!-- MODAL : INFORMATION-->
-  <div class="modal" tabindex="-1" role="dialog" id="myModal">
-      <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-              <h5 class="modal-title">Veuillez-nous excuser</h5>
-              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                  <span aria-hidden="true">&times;</span>
-              </button>
-            </div>
-            <div class="modal-body">
-              <p>Cette page n'est pas encore finie dans son entièreté.</p>
-            </div>
-            <div class="modal-footer">
-              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-              <button type="button" class="btn btn-primary">Save changes</button>
-            </div>
-        </div>
-      </div>
-  </div>
-
-  <h1>Nos Formations</h1> <br/>
+  <h1>Insertion de Programme</h1> <br/>
 
 
   <!-- JUMBOTRON : PRESENTATION-->
   <div class="container">
     <div class="jumbotron">
-        <h2 class="display-4">Formations</h2>
-        <p class="lead">Cette page n'est pas encore disponible.</p>
+        <h2 class="display-4">Résultat</h2>
+        <p class="lead"><?= $message ?></p>
         <hr class="my-4">
-        <p>Retour à la page principale :</p>
+        <p>Retour à la page de connexion :</p>
         <p class="lead">
-          <a href="index.php" class="btn btn-dark btn-lg btn-block" >RETOUR</a> <!-- Lien vers la page "Index.html" -->
+          <a href="index.php" class="btn btn-dark btn-lg btn-block" >RETOUR</a> <!-- Lien vers la page "index.html" -->
         </p>
     </div>
   </div>
   <br/>
-
-
-<script type="text/javascript">
-  $(window).on('load', function() {
-    $('#myModal').modal('show');
-  });
-</script>
 
 
 	<!-- CARD FOOTER : FOOTER-->

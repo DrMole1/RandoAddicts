@@ -1,7 +1,54 @@
+<?php
+
+// On débute la session avec l'id du compte
+session_start();
+$id_utilisateur = $_SESSION['id'];
+$id_programme = $_SESSION['programme_a_reserver'];
+
+// Déclaration d'une variable message
+$message = '';
+
+// Ouverture d'une connexion à la BDD. Nom de la BDD : rando_addicts
+$PDO = new PDO('mysql:host=localhost;dbname=rando_addicts', 'root', '');
+
+// On regarde si le même utilisateur n'a pas déjà fait la même réservation
+$pdoStat = $PDO->prepare('SELECT COUNT(*) FROM reservation WHERE reservation.Id_Compte = :id_compte AND reservation.Id_Programme = :id_programme;');
+// Lier chaque marqueur à une valeur
+$pdoStat->bindValue(':id_compte', $id_utilisateur, PDO::PARAM_INT);
+$pdoStat->bindValue(':id_programme', $id_programme, PDO::PARAM_INT);
+// Exécution de la requête préparée
+$insertIsOk = $pdoStat->execute();
+$isExist = $pdoStat->fetch();
+
+if($isExist[0]) // La réservation existe déjà
+{
+  $message = 'Erreur ! Votre réservation existe déjà pour ce programme.';
+}
+else        // La réservation n'existe pas
+{
+  // Insertion des valeurs dans la table des réservations
+  $pdoStat = $PDO->prepare('INSERT INTO reservation VALUES (:id_compte, :id_programme);');
+  // Lier chaque marqueur à une valeur
+  $pdoStat->bindValue(':id_compte', $id_utilisateur, PDO::PARAM_INT);
+  $pdoStat->bindValue(':id_programme', $id_programme, PDO::PARAM_INT);
+  // Exécution de la requête préparée
+  $insertIsOk = $pdoStat->execute();
+
+  $message = 'Vous avez réservé votre excursion avec succès !';
+}
+
+
+
+?>
+
+
+
+
+
 <!DOCTYPE html>
 <html>
 <head>
-	<title>RandoAddict-Formations</title>
+	<title>RandoAddict-Reservation</title>
 	<meta charset="utf-8">
 	<link rel="stylesheet" type="text/css" href=https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css>
 	<link rel="stylesheet" type="text/css" href="RandoAddictStyle.css"/>
@@ -42,35 +89,13 @@
   <br/>
 
 
-  <!-- MODAL : INFORMATION-->
-  <div class="modal" tabindex="-1" role="dialog" id="myModal">
-      <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-              <h5 class="modal-title">Veuillez-nous excuser</h5>
-              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                  <span aria-hidden="true">&times;</span>
-              </button>
-            </div>
-            <div class="modal-body">
-              <p>Cette page n'est pas encore finie dans son entièreté.</p>
-            </div>
-            <div class="modal-footer">
-              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-              <button type="button" class="btn btn-primary">Save changes</button>
-            </div>
-        </div>
-      </div>
-  </div>
-
-  <h1>Nos Formations</h1> <br/>
-
+  <h1>Réservation</h1> <br/>
 
   <!-- JUMBOTRON : PRESENTATION-->
   <div class="container">
     <div class="jumbotron">
-        <h2 class="display-4">Formations</h2>
-        <p class="lead">Cette page n'est pas encore disponible.</p>
+        <h2 class="display-4">Réservation</h2>
+        <p class="lead"> <?= $message ?> </p>
         <hr class="my-4">
         <p>Retour à la page principale :</p>
         <p class="lead">
@@ -79,13 +104,6 @@
     </div>
   </div>
   <br/>
-
-
-<script type="text/javascript">
-  $(window).on('load', function() {
-    $('#myModal').modal('show');
-  });
-</script>
 
 
 	<!-- CARD FOOTER : FOOTER-->
